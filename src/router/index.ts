@@ -1,5 +1,5 @@
-import CommonLayout from "@/components/layout/common";
-import DashBoardLayout from "@/components/layout/dash-board";
+import CommonLayout from "@/components/layout/common/common";
+import DashBoardLayout from "@/components/layout/admin/dash-board";
 import { createBrowserRouter } from "react-router";
 
 export const router = createBrowserRouter([

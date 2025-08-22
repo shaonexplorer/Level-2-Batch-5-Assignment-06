@@ -26,6 +26,7 @@ import {
 import { Link } from "react-router";
 
 import logo from "../assets/logo.svg";
+import { ModeToggle } from "./layout/common/mode.toggle";
 
 const Navbar = () => {
   const features = [
@@ -120,9 +121,13 @@ const Navbar = () => {
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-          <div className="hidden items-center gap-4 lg:flex">
-            <Button variant="outline">Sign in</Button>
-            <Button>Start for free</Button>
+
+          <div className="items-center gap-4 flex ml-auto mr-4 sm:ml-0 sm:mr-0">
+            <ModeToggle />
+            <div className="hidden items-center gap-4 lg:flex">
+              <Button variant="outline">Sign in</Button>
+              {/* <Button>Start for free</Button> */}
+            </div>
           </div>
           <Sheet>
             <SheetTrigger asChild className="lg:hidden">
@@ -133,19 +138,16 @@ const Navbar = () => {
             <SheetContent side="top" className="max-h-screen overflow-auto">
               <SheetHeader>
                 <SheetTitle>
-                  <a
-                    href="https://www.shadcnblocks.com"
-                    className="flex items-center gap-2"
-                  >
+                  <Link to="/" className="flex items-center gap-2">
                     <img
-                      src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg"
+                      src={logo}
                       className="max-h-8"
                       alt="Shadcn UI Navbar"
                     />
                     <span className="text-lg font-semibold tracking-tighter">
-                      Shadcnblocks.com
+                      PH Courier
                     </span>
-                  </a>
+                  </Link>
                 </SheetTitle>
               </SheetHeader>
               <div className="flex flex-col p-4">
@@ -189,7 +191,7 @@ const Navbar = () => {
                 </div>
                 <div className="mt-6 flex flex-col gap-4">
                   <Button variant="outline">Sign in</Button>
-                  <Button>Start for free</Button>
+                  {/* <Button>Start for free</Button> */}
                 </div>
               </div>
             </SheetContent>
