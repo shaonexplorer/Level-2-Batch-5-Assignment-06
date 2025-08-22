@@ -125,7 +125,10 @@ const Navbar = () => {
           <div className="items-center gap-4 flex ml-auto mr-4 sm:ml-0 sm:mr-0">
             <ModeToggle />
             <div className="hidden items-center gap-4 lg:flex">
-              <Button variant="outline">Sign in</Button>
+              <Link to={"/login"}>
+                <Button>Sign in</Button>
+              </Link>
+
               {/* <Button>Start for free</Button> */}
             </div>
           </div>
