@@ -1,5 +1,13 @@
+import { Outlet } from "react-router";
+import { Navbar } from "../navbar";
+
 function CommonLayout() {
-  return <div>this is common layout</div>;
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  );
 }
 
 export default CommonLayout;
