@@ -1,12 +1,17 @@
 import { Outlet } from "react-router";
-import { Navbar } from "../../navbar";
+import { Navbar } from "./navbar";
+import { Footer } from "./footer";
 
 function CommonLayout() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <Navbar />
-      <Outlet />
-    </>
+      <div className="flex-1">
+        <Outlet />
+      </div>
+
+      <Footer />
+    </div>
   );
 }
 

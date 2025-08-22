@@ -25,8 +25,8 @@ import {
 } from "@/components/ui/sheet";
 import { Link } from "react-router";
 
-import logo from "../assets/logo.svg";
-import { ModeToggle } from "./layout/common/mode.toggle";
+import logo from "../../../assets/logo.svg";
+import { ModeToggle } from "./mode.toggle";
 
 const Navbar = () => {
   const features = [
