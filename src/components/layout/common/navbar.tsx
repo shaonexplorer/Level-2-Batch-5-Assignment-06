@@ -1,4 +1,4 @@
-import { MenuIcon } from "lucide-react";
+import { Loader, MenuIcon } from "lucide-react";
 
 import {
   Accordion,
@@ -27,8 +27,29 @@ import { Link } from "react-router";
 
 import logo from "../../../assets/logo.svg";
 import { ModeToggle } from "./mode.toggle";
+import { useLogoutMutation } from "@/redux/api/auth.api/auth.api";
+import { useAppDispatch } from "@/redux/hooks/hooks";
+import { userApi } from "@/redux/api/user.api/user.api";
 
-const Navbar = () => {
+type NavbarProps = {
+  userData: { success: boolean; data: { email: string } };
+  isLoading: boolean;
+};
+
+const Navbar = ({ userData, isLoading }: NavbarProps) => {
+  const dispatch = useAppDispatch();
+
+  const [logout] = useLogoutMutation();
+  const handleLogout = async () => {
+    try {
+      const res = await logout(undefined).unwrap();
+      dispatch(userApi.util.resetApiState());
+      console.log("logout response", res);
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   const features = [
     {
       title: "Dashboard",
@@ -125,9 +146,18 @@ const Navbar = () => {
           <div className="items-center gap-4 flex ml-auto mr-4 sm:ml-0 sm:mr-0">
             <ModeToggle />
             <div className="hidden items-center gap-4 lg:flex">
-              <Link to={"/login"}>
-                <Button>Sign in</Button>
-              </Link>
+              {!userData?.data?.email && (
+                <Button className="w-[100px]">
+                  <Link to={"/login"}>
+                    {isLoading ? <Loader /> : `Sign in`}
+                  </Link>
+                </Button>
+              )}
+              {userData?.data?.email && (
+                <Button className="w-[100px]" onClick={handleLogout}>
+                  {isLoading ? <Loader /> : `Sign Out`}
+                </Button>
+              )}
 
               {/* <Button>Start for free</Button> */}
             </div>

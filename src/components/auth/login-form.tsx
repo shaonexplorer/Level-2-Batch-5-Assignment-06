@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router";
 import { useForm, type FieldValues } from "react-hook-form";
 import { useLoginMutation } from "@/redux/api/auth.api/auth.api";
 import logo from "../../assets/logo.svg";
+import { toast } from "sonner";
 
 export function LoginForm({
   className,
@@ -24,15 +25,21 @@ export function LoginForm({
 
   const loginForm = useForm();
   const onSubmit = async (data: FieldValues) => {
+    const loadingToast = toast.loading("Logging in...");
     try {
       const result = await login(data).unwrap();
       console.log("Login successful:", result);
       // Handle successful login (e.g., redirect, show message, etc.)
       if (result.success) {
+        toast.success("Login successful!", { id: loadingToast });
         navigate("/dashboard");
       }
     } catch (error) {
       console.error("Login failed:", error);
+      toast.error(
+        "Login failed. Please check your credentials and try again.",
+        { id: loadingToast }
+      );
     }
   };
   return (
