@@ -54,7 +54,7 @@ const Navbar = ({ userData, isLoading }: NavbarProps) => {
     {
       title: "Dashboard",
       description: "Overview of your activity",
-      href: "#",
+      href: "/user",
     },
     {
       title: "Analytics",
@@ -99,18 +99,20 @@ const Navbar = ({ userData, isLoading }: NavbarProps) => {
                   <div className="grid w-[600px] grid-cols-2 p-3">
                     {features.map((feature, index) => (
                       <NavigationMenuLink
-                        href={feature.href}
+                        asChild
                         key={index}
                         className="rounded-md p-3 transition-colors hover:bg-muted/70"
                       >
-                        <div key={feature.title}>
-                          <p className="mb-1 font-semibold text-foreground">
-                            {feature.title}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            {feature.description}
-                          </p>
-                        </div>
+                        <Link to={feature.href}>
+                          <div key={feature.title}>
+                            <p className="mb-1 font-semibold text-foreground">
+                              {feature.title}
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              {feature.description}
+                            </p>
+                          </div>
+                        </Link>
                       </NavigationMenuLink>
                     ))}
                   </div>
