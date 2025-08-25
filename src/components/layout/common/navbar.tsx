@@ -32,7 +32,10 @@ import { useAppDispatch } from "@/redux/hooks/hooks";
 import { userApi } from "@/redux/api/user.api/user.api";
 
 type NavbarProps = {
-  userData: { success: boolean; data: { email: string } };
+  userData: {
+    success: boolean;
+    data: { role: string; userId: { email: string } };
+  };
   isLoading: boolean;
 };
 
@@ -40,6 +43,7 @@ const Navbar = ({ userData, isLoading }: NavbarProps) => {
   const dispatch = useAppDispatch();
 
   const [logout] = useLogoutMutation();
+
   const handleLogout = async () => {
     try {
       const res = await logout(undefined).unwrap();
@@ -55,31 +59,31 @@ const Navbar = ({ userData, isLoading }: NavbarProps) => {
       title: "Dashboard",
       description: "Overview of your activity",
       href: "/user",
+      role: "sender",
+    },
+    {
+      title: "Dashboard",
+      description: "Overview of your activity",
+      href: "/admin",
+      role: "admin",
     },
     {
       title: "Analytics",
       description: "Track your performance",
-      href: "#",
+      href: "/user/analytics",
+      role: "sender",
     },
     {
-      title: "Settings",
-      description: "Configure your preferences",
-      href: "#",
-    },
-    {
-      title: "Integrations",
-      description: "Connect with other tools",
-      href: "#",
-    },
-    {
-      title: "Storage",
-      description: "Manage your files",
-      href: "#",
+      title: "Analytics",
+      description: "Track your performance",
+      href: "/admin/analytics",
+      role: "admin",
     },
     {
       title: "Support",
       description: "Get help when needed",
       href: "#",
+      role: "public",
     },
   ];
 
@@ -97,24 +101,48 @@ const Navbar = ({ userData, isLoading }: NavbarProps) => {
                 <NavigationMenuTrigger>Features</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <div className="grid w-[600px] grid-cols-2 p-3">
-                    {features.map((feature, index) => (
-                      <NavigationMenuLink
-                        asChild
-                        key={index}
-                        className="rounded-md p-3 transition-colors hover:bg-muted/70"
-                      >
-                        <Link to={feature.href}>
-                          <div key={feature.title}>
-                            <p className="mb-1 font-semibold text-foreground">
-                              {feature.title}
-                            </p>
-                            <p className="text-sm text-muted-foreground">
-                              {feature.description}
-                            </p>
-                          </div>
-                        </Link>
-                      </NavigationMenuLink>
-                    ))}
+                    {features.map((feature, index) => {
+                      return (
+                        <>
+                          {feature.role == userData?.data.role && (
+                            <NavigationMenuLink
+                              asChild
+                              key={index}
+                              className="rounded-md p-3 transition-colors hover:bg-muted/70"
+                            >
+                              <Link to={feature.href}>
+                                <div key={feature.title}>
+                                  <p className="mb-1 font-semibold text-foreground">
+                                    {feature.title}
+                                  </p>
+                                  <p className="text-sm text-muted-foreground">
+                                    {feature.description}
+                                  </p>
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          )}
+                          {feature.role == "public" && (
+                            <NavigationMenuLink
+                              asChild
+                              key={index}
+                              className="rounded-md p-3 transition-colors hover:bg-muted/70"
+                            >
+                              <Link to={feature.href}>
+                                <div key={feature.title}>
+                                  <p className="mb-1 font-semibold text-foreground">
+                                    {feature.title}
+                                  </p>
+                                  <p className="text-sm text-muted-foreground">
+                                    {feature.description}
+                                  </p>
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          )}
+                        </>
+                      );
+                    })}
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -148,14 +176,14 @@ const Navbar = ({ userData, isLoading }: NavbarProps) => {
           <div className="items-center gap-4 flex ml-auto mr-4 sm:ml-0 sm:mr-0">
             <ModeToggle />
             <div className="hidden items-center gap-4 lg:flex">
-              {!userData?.data?.email && (
-                <Button className="w-[100px]">
-                  <Link to={"/login"}>
+              {!userData?.data?.userId?.email && (
+                <Link to={"/login"}>
+                  <Button className="w-[100px]">
                     {isLoading ? <Loader /> : `Sign in`}
-                  </Link>
-                </Button>
+                  </Button>
+                </Link>
               )}
-              {userData?.data?.email && (
+              {userData?.data?.userId?.email && (
                 <Button className="w-[100px]" onClick={handleLogout}>
                   {isLoading ? <Loader /> : `Sign Out`}
                 </Button>

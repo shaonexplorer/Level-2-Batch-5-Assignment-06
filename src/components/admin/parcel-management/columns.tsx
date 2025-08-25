@@ -6,13 +6,15 @@ import {
   type IParcel,
 } from "@/types";
 import { type ColumnDef } from "@tanstack/react-table";
-import { CancelAlertDialog } from "../cancel-dialog";
-export const columns: ColumnDef<IParcel>[] = [
+import { CancelTrackDialogAdmin } from "../cancel-track-dialog";
+
+export const columnsAdmin: ColumnDef<IParcel>[] = [
   {
     accessorKey: "trackingNumber",
     header: "Tracking Number",
   },
   {
+    id: "receiver.firstName",
     accessorKey: "receiver.firstName",
     header: "Reciever Name",
   },
@@ -76,24 +78,7 @@ export const columns: ColumnDef<IParcel>[] = [
       const trackingNumber = row.original.trackingNumber;
       const id = row.original._id;
 
-      return (
-        // <DropdownMenu>
-        //   <DropdownMenuTrigger asChild>
-        //     <Button variant="ghost" className="h-8 w-8 p-0">
-        //       <span className="sr-only">Open menu</span>
-        //       <MoreHorizontal className="h-4 w-4" />
-        //     </Button>
-        //   </DropdownMenuTrigger>
-        //   <DropdownMenuContent align="end">
-        //     <DropdownMenuItem
-        //       onClick={() => navigator.clipboard.writeText(payment._id)}
-        //     >
-        //       Track Parcel
-        //     </DropdownMenuItem>
-        //   </DropdownMenuContent>
-        // </DropdownMenu>
-        <CancelAlertDialog id={id} trackingNumber={trackingNumber} />
-      );
+      return <CancelTrackDialogAdmin id={id} trackingNumber={trackingNumber} />;
     },
   },
 ];

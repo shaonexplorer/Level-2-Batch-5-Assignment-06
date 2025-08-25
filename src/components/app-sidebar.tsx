@@ -15,38 +15,15 @@ import {
 import { Link } from "react-router";
 
 import logo from "../assets/logo.svg";
-
-// This is sample data.
-const data = {
-  navMain: [
-    {
-      title: "Getting Started",
-      url: "#",
-      items: [
-        {
-          title: "Analytics",
-          url: "/user/analytics",
-        },
-      ],
-    },
-    {
-      title: "Manage Your Parcel",
-      url: "#",
-      items: [
-        {
-          title: "My Parcels",
-          url: "/user/parcels",
-        },
-        {
-          title: "Track Parcel",
-          url: "/user/track-parcel",
-        },
-      ],
-    },
-  ],
-};
+import { useGetMeQuery } from "@/redux/api/user.api/user.api";
+import { navAdmin } from "@/router/adminMenuList";
+import { navUser } from "@/router/userMenuList";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: userData } = useGetMeQuery(undefined);
+
+  const navMain = userData?.data?.role == "admin" ? navAdmin : navUser;
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -56,7 +33,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </Link>
       </SidebarHeader>
       <SidebarContent>
-        {data.navMain.map((item) => (
+        {navMain.map((item) => (
           <SidebarGroup key={item.title}>
             <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
             <SidebarGroupContent>

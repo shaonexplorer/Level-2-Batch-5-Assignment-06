@@ -32,7 +32,7 @@ export function LoginForm({
       // Handle successful login (e.g., redirect, show message, etc.)
       if (result.success) {
         toast.success("Login successful!", { id: loadingToast });
-        navigate("/dashboard");
+        navigate("/");
       }
     } catch (error) {
       console.error("Login failed:", error);

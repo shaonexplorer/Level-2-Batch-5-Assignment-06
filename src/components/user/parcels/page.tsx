@@ -1,9 +1,18 @@
 import { useGetMyParcelsQuery } from "@/redux/api/parcel.api/parcelApi";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
+import { DialogCreateParcel } from "../dialog.create.parcel";
 
 export default function ParcelsPage() {
-  const { data } = useGetMyParcelsQuery(undefined);
+  const { data, isLoading } = useGetMyParcelsQuery(undefined);
+
+  if (!isLoading && data.data.length == 0)
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <p className="py-10">No Parcel Found</p>
+        <DialogCreateParcel />
+      </div>
+    );
 
   if (data?.data.length > 0)
     return (

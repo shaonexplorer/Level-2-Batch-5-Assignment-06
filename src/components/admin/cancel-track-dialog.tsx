@@ -21,9 +21,9 @@ import { useCancelParcelMutation } from "@/redux/api/parcel.api/parcelApi";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
 
-export function CancelAlertDialog({
-  id,
+export function CancelTrackDialogAdmin({
   trackingNumber,
+  id,
 }: {
   id: string;
   trackingNumber: string;
@@ -58,7 +58,7 @@ export function CancelAlertDialog({
         <DropdownMenuContent align="end">
           <DropdownMenuItem
             onClick={() =>
-              navigate(`/user/track-parcel?trackingNumber=${trackingNumber}`)
+              navigate(`/admin/track-parcel?trackingNumber=${trackingNumber}`)
             }
           >
             Track Parcel

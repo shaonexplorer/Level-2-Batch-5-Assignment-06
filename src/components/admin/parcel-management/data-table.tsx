@@ -20,14 +20,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { DialogCreateParcel } from "../dialog.create.parcel";
+import { DialogCreateParcel } from "@/components/user/dialog.create.parcel";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function DataTableAdmin<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -55,10 +55,16 @@ export function DataTable<TData, TValue>({
     <>
       <div className="flex items-center justify-between py-4">
         <Input
-          placeholder="Filter parcels by status..."
-          value={(table.getColumn("status")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter parcels by receiver..."
+          value={
+            (table
+              .getColumn("receiver.firstName")
+              ?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("status")?.setFilterValue(event.target.value)
+            table
+              .getColumn("receiver.firstName")
+              ?.setFilterValue(event.target.value)
           }
           className="max-w-[200px] sm:max-w-sm"
         />

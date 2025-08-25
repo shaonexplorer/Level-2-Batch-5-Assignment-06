@@ -6,11 +6,24 @@ import SignUpPage from "@/page/auth/signUp";
 import ParcelPage from "@/page/user/parcels-page";
 import Analytics from "@/page/user/analytics";
 import TrackParcel from "@/page/user/track-parcel";
+import AnalyticsAdmin from "@/page/admin/analytics";
+import userManagement from "@/page/admin/userManagement";
+import parcelManagement from "@/page/admin/parcelManagement";
 
 export const router = createBrowserRouter([
   { index: true, path: "/", Component: CommonLayout },
   { path: "/", Component: CommonLayout },
-  { path: "/admin", Component: DashBoardLayout },
+  {
+    path: "/admin",
+    Component: DashBoardLayout,
+    children: [
+      { index: true, Component: AnalyticsAdmin },
+      { path: "analytics", Component: AnalyticsAdmin },
+      { path: "users", Component: userManagement },
+      { path: "parcels", Component: parcelManagement },
+      { path: "track-parcel", Component: TrackParcel },
+    ],
+  },
   {
     path: "/user",
     Component: DashBoardLayout,
