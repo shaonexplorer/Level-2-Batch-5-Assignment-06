@@ -1,5 +1,11 @@
+import UsersPageAdmin from "@/components/admin/user-management/data.-table/page";
+
 function userManagement() {
-  return <div>user managenment page</div>;
+  return (
+    <div>
+      <UsersPageAdmin />
+    </div>
+  );
 }
 
 export default userManagement;

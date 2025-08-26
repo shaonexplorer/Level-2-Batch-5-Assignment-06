@@ -21,6 +21,14 @@ export const parcelApi = baseApi.injectEndpoints({
     trackParcel: builder.query({
       query: (id) => ({ url: `/parcel/${id}`, method: "GET" }),
     }),
+    updateParcelStatus: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/parcel/status/${id}`,
+        method: "PATCH",
+        data,
+      }),
+      invalidatesTags: ["Parcel"],
+    }),
   }),
 });
 
@@ -30,4 +38,5 @@ export const {
   useCreateParcelMutation,
   useCancelParcelMutation,
   useTrackParcelQuery,
+  useUpdateParcelStatusMutation,
 } = parcelApi;

@@ -20,14 +20,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { DialogCreateParcel } from "../dialog.create.parcel";
+
+import { RegisterDialog } from "./dialog-create-user";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function DataTableForUserTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -55,14 +56,16 @@ export function DataTable<TData, TValue>({
     <>
       <div className="flex items-center justify-between py-4">
         <Input
-          placeholder="Filter by status..."
-          value={(table.getColumn("status")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter by Name..."
+          value={
+            (table.getColumn("firstName")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("status")?.setFilterValue(event.target.value)
+            table.getColumn("firstName")?.setFilterValue(event.target.value)
           }
           className="max-w-[200px] sm:max-w-sm"
         />
-        <DialogCreateParcel />
+        <RegisterDialog />
       </div>
       <div className="overflow-hidden rounded-md border">
         <Table>

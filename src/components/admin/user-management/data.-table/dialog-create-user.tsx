@@ -1,34 +1,40 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link, useNavigate } from "react-router";
+
 import { useForm, type FieldValues } from "react-hook-form";
-import logo from "../../assets/logo.svg";
+
+import { registerFormSchema } from "@/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRegisterMutation } from "@/redux/api/auth.api/auth.api";
+import { toast } from "sonner";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
-import { registerFormSchema } from "@/zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRegisterMutation } from "@/redux/api/auth.api/auth.api";
-import { toast } from "sonner";
+} from "@/components/ui/select";
+import { useState } from "react";
 
-export function RegisterForm({
+export function RegisterDialog({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
   const [register, { isLoading }] = useRegisterMutation();
 
   const loginForm = useForm({
@@ -50,7 +56,7 @@ export function RegisterForm({
         toast.success("Registration successful", {
           id: loadingToast,
         });
-        navigate("/login");
+        setOpen(false);
       }
     } catch (error) {
       console.error(error);
@@ -58,26 +64,22 @@ export function RegisterForm({
     }
   };
   return (
-    <div
-      className={cn("flex flex-col gap-6 max-w-[500px] mx-auto", className)}
-      {...props}
-    >
-      <Card>
-        <CardHeader>
-          <Link to={"/"}>
-            <img src={logo} className="h-20 w-20 mx-auto my-5" />
-          </Link>
-
-          <CardTitle>Create your account</CardTitle>
-          <CardDescription>
-            Enter your credentials below to register your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline">Create User</Button>
+      </DialogTrigger>
+      <DialogContent className="w-full">
+        <DialogHeader>
+          <DialogTitle>Register User</DialogTitle>
+          <DialogDescription>
+            Make changes to your profile here. Click save when you&apos;re done.
+          </DialogDescription>
+        </DialogHeader>
+        <div className={cn("flex flex-col gap-6 mt-5 ", className)} {...props}>
           <form onSubmit={loginForm.handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6">
-              <div className="flex flex-col sm:flex-row items-start justify-between gap-3">
-                <div className="grid gap-3 flex-1 w-full">
+              <div className="flex items-start justify-between gap-3">
+                <div className="grid gap-3 flex-1">
                   <Label htmlFor="email">First Name</Label>
                   <Input
                     id="firstName"
@@ -93,7 +95,7 @@ export function RegisterForm({
                     </p>
                   )}
                 </div>
-                <div className="gap-3 flex-1 flex flex-col w-full">
+                <div className="gap-3 flex-1 flex flex-col">
                   <Label htmlFor="email">Last Name</Label>
                   <Input
                     id="lastName"
@@ -150,8 +152,8 @@ export function RegisterForm({
                   </p>
                 )}
               </div>
-              <div className="flex flex-col sm:flex-row items-start justify-between gap-3">
-                <div className="grid gap-3 flex-1 w-full">
+              <div className="flex items-start justify-between gap-3">
+                <div className="grid gap-3 flex-1">
                   <Label htmlFor="email">Street</Label>
                   <Input
                     id="street"
@@ -167,7 +169,7 @@ export function RegisterForm({
                     </p>
                   )}
                 </div>
-                <div className="grid gap-3 flex-1  w-full">
+                <div className="grid gap-3 flex-1">
                   <Label htmlFor="email">ZipCode</Label>
                   <Input
                     id="zipCode"
@@ -188,7 +190,9 @@ export function RegisterForm({
               <div className="grid gap-3">
                 <Label htmlFor="email">City</Label>
                 <Select
-                  onValueChange={(value) => loginForm.setValue("city", value)}
+                  onValueChange={(value: string) =>
+                    loginForm.setValue("city", value)
+                  }
                   {...loginForm.register("city")}
                 >
                   <SelectTrigger className="w-full">
@@ -207,25 +211,18 @@ export function RegisterForm({
                   </p>
                 )}
               </div>
-
-              <div className="flex flex-col gap-3">
-                <Button disabled={isLoading} type="submit" className="w-full">
-                  Register
-                </Button>
-                <Button type="button" variant="outline" className="w-full">
-                  Login with Google
-                </Button>
-              </div>
             </div>
-            <div className="mt-4 text-center text-sm">
-              Already have an account?{" "}
-              <Link to="/login" className="underline underline-offset-4">
-                Log In
-              </Link>
-            </div>
+            <DialogFooter className="mt-7">
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button disabled={isLoading} type="submit">
+                Register
+              </Button>
+            </DialogFooter>
           </form>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

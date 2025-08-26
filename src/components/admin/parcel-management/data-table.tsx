@@ -55,7 +55,7 @@ export function DataTableAdmin<TData, TValue>({
     <>
       <div className="flex items-center justify-between py-4">
         <Input
-          placeholder="Filter parcels by receiver..."
+          placeholder="Filter by receiver..."
           value={
             (table
               .getColumn("receiver.firstName")

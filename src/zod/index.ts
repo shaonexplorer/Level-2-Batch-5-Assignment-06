@@ -26,3 +26,7 @@ export const createParcelFormSchema = z.object({
   weightKg: z.number().min(0.1, "Weight must be at least 0.1 kg"),
   isFragile: z.boolean().optional(),
 });
+
+export const updateStatusSchema = z.object({
+  status: z.string().min(1, "status is required"),
+});
