@@ -3,6 +3,7 @@ import { useGetAllParcelQuery } from "@/redux/api/parcel.api/parcelApi";
 import { DataTableAdmin } from "./data-table";
 import { columnsAdmin } from "./columns";
 import { SkeletonTable } from "@/components/skeleton/skeleton-table";
+import { DialogCreateParcel } from "@/components/user/dialog.create.parcel";
 
 export default function ParcelsPageAdmin() {
   const { data, isLoading } = useGetAllParcelQuery(undefined);
@@ -11,6 +12,14 @@ export default function ParcelsPageAdmin() {
     return (
       <div className="container mx-auto max-w-6xl py-10  ">
         <SkeletonTable />
+      </div>
+    );
+
+  if (!isLoading && data.data.length == 0)
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <p className="py-10">No Parcel Found</p>
+        <DialogCreateParcel />
       </div>
     );
 

@@ -2,6 +2,7 @@ import { useGetAllUsersQuery } from "@/redux/api/user.api/user.api";
 import { columnsUser } from "./columns";
 import { DataTableForUserTable } from "./data-table";
 import { SkeletonTable } from "@/components/skeleton/skeleton-table";
+import { RegisterDialog } from "./dialog-create-user";
 
 export default function UsersPageAdmin() {
   const { data, isLoading } = useGetAllUsersQuery(undefined);
@@ -13,6 +14,14 @@ export default function UsersPageAdmin() {
       </div>
     );
   }
+
+  if (!isLoading && data.data.length == 0)
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <p className="py-10">No User Found</p>
+        <RegisterDialog />
+      </div>
+    );
 
   if (data?.data.length > 0)
     return (
