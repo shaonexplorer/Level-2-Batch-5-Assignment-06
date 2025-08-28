@@ -34,7 +34,7 @@ import { userApi } from "@/redux/api/user.api/user.api";
 type NavbarProps = {
   userData: {
     success: boolean;
-    data: { role: string; userId: { email: string } };
+    data: { email?: string; role: string; userId: { email: string } };
   };
   isLoading: boolean;
 };
@@ -110,7 +110,7 @@ const Navbar = ({ userData, isLoading }: NavbarProps) => {
                     {features.map((feature, index) => {
                       return (
                         <>
-                          {feature.role == userData?.data.role && (
+                          {feature.role == userData?.data?.role && (
                             <NavigationMenuLink
                               asChild
                               key={index}
@@ -169,14 +169,18 @@ const Navbar = ({ userData, isLoading }: NavbarProps) => {
           <div className="items-center gap-4 flex ml-auto mr-4 sm:ml-0 sm:mr-0">
             <ModeToggle />
             <div className="hidden items-center gap-4 lg:flex">
-              {!userData?.data?.userId?.email && (
-                <Link to={"/login"}>
-                  <Button className="w-[100px]">
-                    {isLoading ? <Loader /> : `Sign in`}
-                  </Button>
-                </Link>
-              )}
-              {userData?.data?.userId?.email && (
+              {userData?.data?.email
+                ? !userData?.data?.email || !userData?.data?.userId?.email
+                : !userData?.data?.userId?.email && (
+                    <Link to={"/login"}>
+                      <Button className="w-[100px]">
+                        {isLoading ? <Loader /> : `Sign in`}
+                      </Button>
+                    </Link>
+                  )}
+              {(userData?.data?.email
+                ? userData?.data?.email || userData?.data?.userId?.email
+                : userData?.data?.userId?.email) && (
                 <Button className="w-[100px]" onClick={handleLogout}>
                   {isLoading ? <Loader /> : `Sign Out`}
                 </Button>
@@ -233,7 +237,7 @@ const Navbar = ({ userData, isLoading }: NavbarProps) => {
                                   </div>
                                 </Link>
                               )}
-                              {feature.role == userData?.data.role && (
+                              {feature.role == userData?.data?.role && (
                                 <Link
                                   to={feature.href}
                                   key={index}
