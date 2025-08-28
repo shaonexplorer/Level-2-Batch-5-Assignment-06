@@ -18,6 +18,9 @@ It leverages React Router for navigation and shadcn/ui for styling.
 
 ## Features
 
+- Authentication (login/logout) functionality
+- Interactive dashboard for both admin and users
+- Dark mode toggle
 - parcel listing with search and filters
 - Add, cancel, and track parcel entries
 - Client-side form validation in TypeScript
