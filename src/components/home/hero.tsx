@@ -2,6 +2,7 @@ import { Star } from "lucide-react";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
 interface Hero7Props {
   heading?: string;
@@ -21,11 +22,11 @@ interface Hero7Props {
 }
 
 const Hero = ({
-  heading = "A Collection of Components Built With Shadcn & Tailwind",
-  description = "Finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.",
+  heading = "No.1 Courier Delivery Service in Bangladesh",
+  description = "PH Courier is the fastest courier service in Bangladesh that ensures safe delivery of your product right on time.",
   button = {
-    text: "Discover all components",
-    url: "https://www.shadcnblocks.com",
+    text: "Register To Send Parcel",
+    url: "/signup",
   },
   reviews = {
     count: 200,
@@ -64,7 +65,7 @@ const Hero = ({
           </p>
         </div>
         <Button asChild size="lg" className="mt-10">
-          <a href={button.url}>{button.text}</a>
+          <Link to={button.url}>{button.text}</Link>
         </Button>
         <div className="mx-auto mt-10 flex w-fit flex-col items-center gap-4 sm:flex-row">
           <span className="mx-4 inline-flex items-center -space-x-4">

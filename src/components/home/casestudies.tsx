@@ -1,4 +1,6 @@
 import { Separator } from "@/components/ui/separator";
+import profile01 from "../../assets/profile01.jpg";
+import profile02 from "../../assets/profile02.jpg";
 
 const Casestudies = () => {
   return (
@@ -14,7 +16,7 @@ const Casestudies = () => {
           <div className="grid gap-16 lg:grid-cols-3 xl:gap-24">
             <div className="flex flex-col gap-10 border-border sm:flex-row lg:col-span-2 lg:border-r lg:pr-16 xl:pr-24">
               <img
-                src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg"
+                src={profile01}
                 alt="placeholder"
                 className="aspect-29/35 h-full w-full max-w-60 rounded-2xl object-cover"
               />
@@ -61,7 +63,7 @@ const Casestudies = () => {
           <div className="grid gap-16 lg:grid-cols-3 xl:gap-24">
             <div className="flex flex-col gap-10 border-border sm:flex-row lg:col-span-2 lg:border-r lg:pr-16 xl:pr-24">
               <img
-                src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-2.svg"
+                src={profile02}
                 alt="placeholder"
                 className="aspect-29/35 h-full w-full max-w-60 rounded-2xl object-cover"
               />

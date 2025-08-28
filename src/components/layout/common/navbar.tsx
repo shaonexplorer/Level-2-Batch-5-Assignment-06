@@ -80,16 +80,22 @@ const Navbar = ({ userData, isLoading }: NavbarProps) => {
       role: "admin",
     },
     {
+      title: "Track Parcel",
+      description: "Track parcel with unique tracking number",
+      href: "/tracking",
+      role: "public",
+    },
+    {
       title: "Support",
       description: "Get help when needed",
-      href: "#",
+      href: "/faq",
       role: "public",
     },
   ];
 
   return (
-    <section className="py-4">
-      <div className="container mx-auto">
+    <section className="py-4   ">
+      <div className="container mx-auto ">
         <nav className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 w-[200px] ">
             <img src={logo} className="max-h-8" alt="Shadcn UI Navbar" />
@@ -146,28 +152,15 @@ const Navbar = ({ userData, isLoading }: NavbarProps) => {
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
+
               <NavigationMenuItem>
-                <NavigationMenuLink
-                  href="#"
-                  className={navigationMenuTriggerStyle()}
-                >
-                  Products
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <Link to="/about">About Us</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuLink
-                  href="#"
-                  className={navigationMenuTriggerStyle()}
-                >
-                  Resources
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  href="#"
-                  className={navigationMenuTriggerStyle()}
-                >
-                  Contact
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <Link to="/contact">Contact</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -221,39 +214,73 @@ const Navbar = ({ userData, isLoading }: NavbarProps) => {
                     </AccordionTrigger>
                     <AccordionContent>
                       <div className="grid md:grid-cols-2">
-                        {features.map((feature, index) => (
-                          <a
-                            href={feature.href}
-                            key={index}
-                            className="rounded-md p-3 transition-colors hover:bg-muted/70"
-                          >
-                            <div key={feature.title}>
-                              <p className="mb-1 font-semibold text-foreground">
-                                {feature.title}
-                              </p>
-                              <p className="text-sm text-muted-foreground">
-                                {feature.description}
-                              </p>
-                            </div>
-                          </a>
-                        ))}
+                        {features.map((feature, index) => {
+                          return (
+                            <>
+                              {feature.role == "public" && (
+                                <Link
+                                  to={feature.href}
+                                  key={index}
+                                  className="rounded-md p-3 transition-colors hover:bg-muted/70"
+                                >
+                                  <div key={feature.title}>
+                                    <p className="mb-1 font-semibold text-foreground">
+                                      {feature.title}
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">
+                                      {feature.description}
+                                    </p>
+                                  </div>
+                                </Link>
+                              )}
+                              {feature.role == userData?.data.role && (
+                                <Link
+                                  to={feature.href}
+                                  key={index}
+                                  className="rounded-md p-3 transition-colors hover:bg-muted/70"
+                                >
+                                  <div key={feature.title}>
+                                    <p className="mb-1 font-semibold text-foreground">
+                                      {feature.title}
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">
+                                      {feature.description}
+                                    </p>
+                                  </div>
+                                </Link>
+                              )}
+                            </>
+                          );
+                        })}
                       </div>
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
                 <div className="flex flex-col gap-6">
-                  <a href="#" className="font-medium">
-                    Templates
-                  </a>
-                  <a href="#" className="font-medium">
-                    Blog
-                  </a>
-                  <a href="#" className="font-medium">
-                    Pricing
-                  </a>
+                  <Link to="/about" className="font-medium">
+                    About Us
+                  </Link>
+                  <Link to="/contact" className="font-medium">
+                    Contact
+                  </Link>
                 </div>
                 <div className="mt-6 flex flex-col gap-4">
-                  <Button variant="outline">Sign in</Button>
+                  {!userData?.data?.userId?.email && (
+                    <Link to={"/login"} className=" ">
+                      <Button variant={"outline"} className="w-full ">
+                        {isLoading ? <Loader /> : `Sign in`}
+                      </Button>
+                    </Link>
+                  )}
+                  {userData?.data?.userId?.email && (
+                    <Button
+                      variant={"outline"}
+                      className=" w-full"
+                      onClick={handleLogout}
+                    >
+                      {isLoading ? <Loader /> : `Sign Out`}
+                    </Button>
+                  )}
                   {/* <Button>Start for free</Button> */}
                 </div>
               </div>
